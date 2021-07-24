@@ -15,7 +15,8 @@ export class GenericTableComponent extends BaseComponent {
     renderTable = () => {
         const headRow = this.renderHeadRow();
         const bodyRows = this.store.getItems().map(item => this.renderBodyRow(item));
-        return this.renderElement('table', this.tableConfig.attributes, [headRow, ...bodyRows]);
+        const table = this.renderElement('table', this.tableConfig.attributes, [headRow, ...bodyRows]);
+        return this.renderElement('div', { className: 'table-container' }, [table]);
     }
 
     renderHeadRow = () => {

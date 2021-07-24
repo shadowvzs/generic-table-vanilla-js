@@ -23,7 +23,7 @@ body {
     grid-template-areas:
         "search add"
         "table table";
-    max-width: 1200px;
+    max-width: 1280px;
     margin: auto;
     font-size: 14px;
     background: white;
@@ -89,11 +89,18 @@ body {
     text-shadow: 0 0 2px #000;
 }
 
-.generic-table table {
+.generic-table .table-container {
     grid-area: table;
+    overflow: auto;
+    max-height: calc(100vh - 125px);
+    padding: 0;
+}
+
+.generic-table table {
     border: 1px solid rgba(0,0,0,.25);
     border-collapse: collapse;
     margin: 0 16px;
+    width: calc(100% - 32px);
 }
 
 .generic-table table tr {
@@ -116,6 +123,7 @@ body {
 }
 
 .generic-table table th.sortable {
+    position: relative;
     cursor: pointer;
 }
 

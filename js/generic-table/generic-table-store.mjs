@@ -1,3 +1,5 @@
+import { dummyItems } from './dummy-data.mjs';
+
 function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       const r = Math.random() * 16 | 0; 
@@ -5,29 +7,6 @@ function guid() {
       return v.toString(16);
     });
 }
-
-const dummyItems = [
-    {
-        id: guid(),
-        firstName: 'kis',
-        lastName: 'pista',
-        userName: 'hepcia',
-        email: 'kispista@gmail.com',
-        function: 'CTO',
-        salary: 222,
-        createdAt: new Date(1627141936045)
-    },
-    {
-        id: guid(),
-        firstName: 'nagy',
-        lastName: 'janos',
-        userName: 'pingvinKid',
-        email: 'willsmith@gmail.com',
-        function: 'CEO',
-        salary: 100,
-        createdAt: new Date(1627141936045 - 1000000)
-    }
-];
 
 export const SORT_DIRECTION = ['ASC', 'DESC'];
 
