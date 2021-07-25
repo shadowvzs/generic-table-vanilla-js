@@ -6,23 +6,25 @@ export class BaseComponent {
         this.refresh = this.refresh.bind(this);
     }
 
-    renderElement(tagName, attributes, children) {
+    renderElement(data) {
+        if (typeof data !== 'object') {
+            if (typeof data === 'string') {
+                return document.createTextNode(data);
+            } else if (typeof data === 'number') {
+                return document.createTextNode(String(data));
+            }
+        }
+        const { tagName, attributes, children } = data;
         const element = document.createElement(tagName.toUpperCase());
         if (typeof attributes === 'object') {
             for (let attributeName in attributes) {
                 element[attributeName] = attributes[attributeName];
             }
         }
-        if (Array.isArray(children)) {
+        if (Array.isArray(children)) { 
             for (const child of children) {
-                if (typeof child === 'object') {
-                    element.appendChild(child);
-                } else if (typeof child === 'string') {
-                    element.appendChild(document.createTextNode(child));
-                } else if (typeof child === 'number') {
-                    element.appendChild(document.createTextNode(String(child)));
-                }
-                
+                if (!child) { continue; }
+                element.appendChild(this.renderElement(child));
             }
         }
         return element;

@@ -1,6 +1,6 @@
 import { GenericTableComponent } from './generic-table/generic-table-component.mjs';
 import { GenericTableStore } from './generic-table/generic-table-store.mjs';
-import { Employee } from './model.mjs';
+import { Employee } from './Employee.mjs';
 
 // condition when page is ready then call init, else create evnet listener which wait till the page is loaded
 if (document.readyState === 'complete') {
@@ -17,7 +17,7 @@ function init() {
     // we create a table config
     const tableconfig = {
         model: Employee,
-        endpoint: 'endpoint',
+        endpoint: 'https://60fd9bcc1fa9e90017c70f18.mockapi.io/api/employees/',
         attributes: {},
         formFields: [
             { placeholder: 'Username', name: 'userName', type: 'text', required: true }, 
@@ -89,7 +89,6 @@ function init() {
             },
         ]
     };
-    
 
     // search four our parent element, where we will insert our table component
     const parentElement = document.querySelector('#root');
