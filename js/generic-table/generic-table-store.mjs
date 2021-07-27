@@ -23,20 +23,30 @@ export class GenericTableStore {
     }
 
     init() {
-        this.sortableColumns = this.tableConfig.columns.filter(x => x.sorter);
-        if (this.sortableColumns.length > 1) {
-            this.setSort(this.sortableColumns[0].id);
+        const firstSortableColumn = this.tableConfig.columns.find(x => x.sorter);
+        if (firstSortableColumn) {
+            this.setSort(firstSortableColumn.id);
         }
         this.getList();
         
     }
 
     // --- CRUD method: get/created/update/delete ---
+    get = async (id) => {
+        const Model = this.tableConfig.model;
+        const request = await fetch(this.tableConfig.endpoint + id);
+        const item = await request.json();
+        const mappedItem = new Model(item);
+        return mappedItem;
+    }   
+
     getList = async () => {
         const Model = this.tableConfig.model;
         const request = await fetch(this.tableConfig.endpoint);
         const items = await request.json();
-        this.setItems(items.map(x => new Model(x)));
+        const mappedItems = items.map(x => new Model(x));
+        this.setItems(mappedItems);
+        return mappedItems;
     }    
 
     create = async (data) => {
@@ -52,7 +62,9 @@ export class GenericTableStore {
             },
         });
         const savedItem = await request.json();
-        this.setItems([savedItem, ...this.items, item]);
+        const mappedItem = new Model(savedItem);
+        this.setItems([mappedItem, ...this.items, item]);
+        return mappedItem;
     }
 
     update = async  (data) => {
@@ -65,7 +77,9 @@ export class GenericTableStore {
             }
         });
         const updatedItem = await request.json();
-        this.setItems(this.items.map(item => item.id === data.id ? updatedItem : item));
+        const mappedItem = new Model(updatedItem);
+        this.setItems(this.items.map(item => item.id === data.id ? mappedItem : item));
+        return mappedItem;
     }
 
     delete = async (deletedItem) => {
