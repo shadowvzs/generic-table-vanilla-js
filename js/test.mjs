@@ -19,7 +19,7 @@ class Task {
 }
 
 // we create a table config
-const tableconfig = {
+const tableConfig = {
     model: Task,
     endpoint: 'https://60fd9bcc1fa9e90017c70f18.mockapi.io/api/todos/',
     attributes: {},
@@ -47,7 +47,7 @@ const tableconfig = {
             label: 'Title',
             getCellValue: (task) => task.title,
             attributes: {},
-            sorter: (task1, task2) => task1.title.localeCompare(task.title)
+            sorter: (task1, task2) => task1.title.localeCompare(task2.title)
 
         },
         {

@@ -2,7 +2,7 @@ import { GenericTableComponent } from './generic-table/generic-table-component.m
 import { GenericTableStore } from './generic-table/generic-table-store.mjs';
 import { Employee } from './Employee.mjs';
 
-// condition when page is ready then call init, else create evnet listener which wait till the page is loaded
+// condition when page is ready then call init, else create event listener which wait till the page is loaded
 if (document.readyState === 'complete') {
     this.init();
 } else {
@@ -15,14 +15,14 @@ function init() {
     window.removeEventListener('load', init);
 
     // we create a table config
-    const tableconfig = {
+    const tableConfig = {
         model: Employee,
         endpoint: 'https://60fd9bcc1fa9e90017c70f18.mockapi.io/api/employees/',
         attributes: {},
         formFields: [
             { placeholder: 'Username', name: 'userName', type: 'text', required: true }, 
-            { placeholder: 'Firstname', name: 'firstName', type: 'text', required: true },
-            { placeholder: 'Lastname', name: 'lastName', type: 'text', required: true }, 
+            { placeholder: 'First name', name: 'firstName', type: 'text', required: true },
+            { placeholder: 'Last name', name: 'lastName', type: 'text', required: true }, 
             { placeholder: 'Email', name: 'email', type: 'text', required: true }, 
             { placeholder: 'Function', name: 'function', type: 'text', required: true }, 
             { placeholder: 'Salary', name: 'salary', type: 'number', required: true }
@@ -47,9 +47,9 @@ function init() {
             {
                 id: 'fullName',
                 label: 'Full name',
-                getCellValue: (user) => `${user.firstName} ${user.lastName}`,
+                getCellValue: (user) => user.getFullName(),
                 attributes: {},
-                sorter: (user1, user2) => (`${user1.firstName} ${user1.lastName}`).localeCompare(`${user2.firstName} ${user2.lastName}`)
+                sorter: (user1, user2) => user1.getFullName().localeCompare(user2.getFullName())
 
             },
             {
@@ -94,7 +94,7 @@ function init() {
     const parentElement = document.querySelector('#root');
 
     // table store, handle CRUD and logic
-    const tableStore = new GenericTableStore(tableconfig);
+    const tableStore = new GenericTableStore(tableConfig);
 
     // initialize the table component
     const cmp = new GenericTableComponent(tableStore);

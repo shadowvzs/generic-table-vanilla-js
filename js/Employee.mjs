@@ -9,6 +9,10 @@ export class Employee {
     function = undefined;
     createdAt = undefined;
 
+    getFullName() {
+        return `${this.firstName} ${this.lastName}`;
+    }
+
     constructor(initData) {
         // check if we have initial data
         if (typeof initData !== 'object') { return; }
